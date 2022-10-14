@@ -1,5 +1,7 @@
 package org.example.db;
 
+import org.example.base.ConfProperties;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,9 +15,9 @@ public class DBUtils {
     private static ResultSet resultSet;
 
     public static void createConnection() {
-        String dbUrl = "jdbc:mariadb://localhost:3306/testingdb";
-        String dbUsername = "root";
-        String dbPassword = "root";
+        String dbUrl = ConfProperties.getProperty("dbUrl");
+        String dbUsername = ConfProperties.getProperty("dbUsername");
+        String dbPassword = ConfProperties.getProperty("dbPassword");
 
         try {
 //            Class.forName("com.mysql.jdbc.Driver");
