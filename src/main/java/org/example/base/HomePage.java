@@ -21,16 +21,26 @@ public class HomePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
     @FindBy(xpath = "//button[@data-testid='myAccountIcon']")
-    public WebElement myAccountDropDownBtn;
+    private WebElement myAccountDropDownBtn;
+
+    @FindBy(xpath = "//a[@data-testid='signup-link']")
+    private WebElement signUpLink;
 
     @FindBy(xpath = "//a[@data-testid='signin-link']")
-    public WebElement signInLink;
+    private WebElement signInLink;
 
     @FindBy(xpath = "//button[@data-testid='signout-link']")
-    public WebElement signOutBtn;
+    private WebElement signOutBtn;
 
     @FindBy(xpath = "//a[@data-testid='myaccount-link']")
-    public WebElement myAccountLink;
+    private WebElement myAccountLink;
+
+    public void clickOnSignUpLink(){
+        wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
+        myAccountDropDownBtn.click();
+        wait.until(ExpectedConditions.visibilityOf(signUpLink));
+        signUpLink.click();
+    }
 
     public void clickOnSignInLink(){
         wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
