@@ -1,6 +1,7 @@
 package org.example.db;
 
 import org.example.base.ConfProperties;
+import org.example.domain.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class DBUtils {
     private static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
+    private static PreparedStatement preparedStatement;
 
     public static void createConnection() {
         String dbUrl = ConfProperties.getProperty("dbUrl");
@@ -20,7 +22,7 @@ public class DBUtils {
         String dbPassword = ConfProperties.getProperty("dbPassword");
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -39,6 +41,21 @@ public class DBUtils {
         }
         try {
             resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertQuery(String query){
+        try {
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            statement.execute(query);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
