@@ -135,6 +135,25 @@ public class DBUtils {
         return rowList;
     }
 
+    public static User getUserData(String query) {
+        executeQuery(query);
+        User user = new User();
+        ResultSetMetaData rsmd;
+        try {
+            rsmd = resultSet.getMetaData();
+            while (resultSet.next()) {
+                user.setId(resultSet.getLong("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public static void destroy() {
         try {
             if (resultSet != null) {

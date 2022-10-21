@@ -1,19 +1,23 @@
 package com.example.pages;
 
 import com.example.core.BaseTest;
-import com.example.core.SignInInterface;
 import org.example.base.ConfProperties;
 import org.example.base.HomePage;
+import org.example.domain.User;
+import org.example.db.DBUtils;
 import org.example.pages.RegisterPage;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class RegisterPageTest extends BaseTest {
     private HomePage homePage;
     private RegisterPage registerPage;
+    private String email = ConfProperties.getProperty("email");
+    private String password = ConfProperties.getProperty("password");
+    private String username = ConfProperties.getProperty("username");
+    private String insertQuery = "INSERT INTO user (email, username, password)";
 
     @BeforeClass
     public void initialization(){
@@ -23,15 +27,20 @@ public class RegisterPageTest extends BaseTest {
 
     @Test
     public void registerTest() {
-        String email = ConfProperties.getProperty("email");
-        String password = ConfProperties.getProperty("password");
-        String firstName = ConfProperties.getProperty("firstName");
-        String lastName = ConfProperties.getProperty("lastName");
-        int dayOfBirth = Integer.parseInt(ConfProperties.getProperty("dayOfBirth"));
-        int monthOfBirth = Integer.parseInt(ConfProperties.getProperty("monthOfBirth"));
-        int yearOfBirth = Integer.parseInt(ConfProperties.getProperty("yearOfBirth"));
-
         homePage.clickOnSignUpLink();
-        registerPage.register(email, firstName, lastName, password, dayOfBirth, monthOfBirth, yearOfBirth);
+        registerPage.register(email, password, username);
+
+        DBUtils.insertQuery(insertQuery + "values ('" + email + "', '"+ username + "', '" + password + "');");
+
+        User fetchedUser = DBUtils.getUserData("SELECT *from user where username ='" + username + "';");
+
+        Assert.assertEquals(username, fetchedUser.getUsername());
+        Assert.assertEquals(email, fetchedUser.getEmail());
+        Assert.assertEquals(password, fetchedUser.getPassword());
+    }
+
+    @AfterMethod
+    public void signOut() {
+        homePage.clickOnSignOutLink();
     }
 }
