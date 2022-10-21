@@ -22,8 +22,9 @@ public class BaseTest {
         DBUtils.createConnection();
     }
 
-//    @AfterTest
-//    public void tearDown(){
-//        driver.quit();
-//    }
+    @AfterTest
+    public void tearDown(){
+        driver.quit();
+        DBUtils.destroy();
+    }
 }
