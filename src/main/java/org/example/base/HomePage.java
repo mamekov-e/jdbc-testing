@@ -20,46 +20,19 @@ public class HomePage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    @FindBy(xpath = "//button[@data-testid='myAccountIcon']")
-    private WebElement myAccountDropDownBtn;
-
-    @FindBy(xpath = "//a[@data-testid='signup-link']")
+    @FindBy(linkText = "Регистрация")
     private WebElement signUpLink;
 
-    @FindBy(xpath = "//a[@data-testid='signin-link']")
-    private WebElement signInLink;
-
-    @FindBy(xpath = "//button[@data-testid='signout-link']")
-    private WebElement signOutBtn;
-
-    @FindBy(xpath = "//a[@data-testid='myaccount-link']")
-    private WebElement myAccountLink;
+    @FindBy(linkText = "Выход")
+    private WebElement signOutLink;
 
     public void clickOnSignUpLink(){
-        wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
-        myAccountDropDownBtn.click();
         wait.until(ExpectedConditions.visibilityOf(signUpLink));
         signUpLink.click();
     }
 
-    public void clickOnSignInLink(){
-        wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
-        myAccountDropDownBtn.click();
-        wait.until(ExpectedConditions.visibilityOf(signInLink));
-        signInLink.click();
-    }
-
-    public void clickOnMyAccountLink(){
-        wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
-        myAccountDropDownBtn.click();
-        wait.until(ExpectedConditions.visibilityOf(myAccountLink));
-        myAccountLink.click();
-    }
-
-    public void clickOnSignOutBtn(){
-        wait.until(ExpectedConditions.visibilityOf(myAccountDropDownBtn));
-        myAccountDropDownBtn.click();
-        wait.until(ExpectedConditions.visibilityOf(signOutBtn));
-        signOutBtn.click();
+    public void clickOnSignOutLink(){
+        wait.until(ExpectedConditions.visibilityOf(signOutLink));
+        signOutLink.click();
     }
 }
